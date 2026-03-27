@@ -168,5 +168,6 @@ A fila já fica organizada quando insere.
 - não foram usadas bibliotecas prontas
 - não foi utilizado sort (ex: qsort)
 ----------
-Feito por João Gabriel Bamberg e Ramon.
+Feito por João Gabriel Bamberg Git:    jaozindoshack33
+E Ramon Git: mororamon73-alt 
 ---------
