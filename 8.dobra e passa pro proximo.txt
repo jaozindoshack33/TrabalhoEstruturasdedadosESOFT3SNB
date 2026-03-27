@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int v[5];
+    int *p;
+    int i;
+
+    p = v; // ponteiro aponta pro início do vetor
+
+    // leitura dos valores
+    for(i = 0; i < 5; i++) {
+        printf("Digite um numero: ");
+        scanf("%d", (p + i));
+    }
+
+    // imprimir o dobro
+    printf("\nDobro dos valores:\n");
+    for(i = 0; i < 5; i++) {
+        printf("%d ", *(p + i) * 2);
+    }
+
+    return 0;
+}

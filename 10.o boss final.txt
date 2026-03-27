@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Aluno {
+    char nome[50];
+    float nota;
+};
+
+// função que retorna ponteiro para o aluno com maior nota
+struct Aluno* maiorNota(struct Aluno *p, int n) {
+    struct Aluno *maior = p;
+    int i;
+
+    for(i = 1; i < n; i++) {
+        if((p + i)->nota > maior->nota) {
+            maior = (p + i);
+        }
+    }
+
+    return maior;
+}
+
+int main() {
+    int n, i;
+    struct Aluno *alunos;
+    struct Aluno *melhor;
+
+    printf("Digite a quantidade de alunos: ");
+    scanf("%d", &n);
+
+    // alocação dinâmica
+    alunos = (struct Aluno*) malloc(n * sizeof(struct Aluno));
+
+    if(alunos == NULL) {
+        printf("Erro de memoria\n");
+        return 1;
+    }
+
+    // leitura dos dados
+    for(i = 0; i < n; i++) {
+        printf("\nAluno %d\n", i + 1);
+
+        printf("Nome: ");
+        scanf("%s", (alunos + i)->nome);
+
+        printf("Nota: ");
+        scanf("%f", &(alunos + i)->nota);
+    }
+
+    // chamar função
+    melhor = maiorNota(alunos, n);
+
+    // mostrar resultado
+    printf("\nAluno com maior nota:\n");
+    printf("Nome: %s\n", melhor->nome);
+    printf("Nota: %.2f\n", melhor->nota);
+
+    // liberar memória
+    free(alunos);
+
+    return 0;
+}

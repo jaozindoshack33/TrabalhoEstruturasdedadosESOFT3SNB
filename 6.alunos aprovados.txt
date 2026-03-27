@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+struct Aluno {
+    char nome[50];
+    int matricula;
+    float media;
+};
+
+int main() {
+    struct Aluno alunos[10];
+    struct Aluno aprovados[10];
+    struct Aluno reprovados[10];
+
+    int i, qtdAprovados = 0, qtdReprovados = 0;
+
+    // leitura dos dados
+    for(i = 0; i < 10; i++) {
+        printf("\nAluno %d\n", i + 1);
+
+        printf("Nome: ");
+        scanf("%s", alunos[i].nome);
+
+        printf("Matricula: ");
+        scanf("%d", &alunos[i].matricula);
+
+        printf("Media: ");
+        scanf("%f", &alunos[i].media);
+    }
+
+    // separando aprovados e reprovados
+    for(i = 0; i < 10; i++) {
+        if(alunos[i].media >= 5.0) {
+            aprovados[qtdAprovados] = alunos[i];
+            qtdAprovados++;
+        } else {
+            reprovados[qtdReprovados] = alunos[i];
+            qtdReprovados++;
+        }
+    }
+
+    // mostrar aprovados
+    printf("\n--- APROVADOS ---\n");
+    for(i = 0; i < qtdAprovados; i++) {
+        printf("Nome: %s | Matricula: %d | Media: %.2f\n",
+               aprovados[i].nome,
+               aprovados[i].matricula,
+               aprovados[i].media);
+    }
+
+    // mostrar reprovados
+    printf("\n--- REPROVADOS ---\n");
+    for(i = 0; i < qtdReprovados; i++) {
+        printf("Nome: %s | Matricula: %d | Media: %.2f\n",
+               reprovados[i].nome,
+               reprovados[i].matricula,
+               reprovados[i].media);
+    }
+
+    return 0;
+}
