@@ -165,3 +165,6 @@ A fila já fica organizada quando insere.
 - não foi utilizado vetor
 - não foram usadas bibliotecas prontas
 - não foi utilizado sort (ex: qsort)
+----------
+Feito por João Gabriel Bamberg e Ramon.
+---------
