@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct No {
+    int id;
+    int tempo;
+    struct No *prox;
+} No;
+
+typedef struct {
+    No *ini;
+    No *fim;
+} Fila;
+
+void init(Fila *f) {
+    f->ini = NULL;
+    f->fim = NULL;
+}
+
+int vazia(Fila *f) {
+    return f->ini == NULL;
+}
+
+void enqueue(Fila *f, int id, int tempo) {
+    No *n = (No*) malloc(sizeof(No));
+    n->id = id;
+    n->tempo = tempo;
+    n->prox = NULL;
+
+    if(vazia(f)) {
+        f->ini = n;
+        f->fim = n;
+    } else {
+        f->fim->prox = n;
+        f->fim = n;
+    }
+}
+
+No* dequeue(Fila *f) {
+    if(vazia(f)) return NULL;
+
+    No *t = f->ini;
+    f->ini = t->prox;
+
+    if(f->ini == NULL)
+        f->fim = NULL;
+
+    return t;
+}
+
+int main() {
+    Fila f;
+    init(&f);
+
+    int n, i, id, tempo;
+    int espera = 0;
+
+    printf("Quantidade de clientes: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++) {
+        printf("ID: ");
+        scanf("%d", &id);
+
+        printf("Tempo: ");
+        scanf("%d", &tempo);
+
+        enqueue(&f, id, tempo);
+    }
+
+    printf("\nAtendimento:\n");
+
+    while(!vazia(&f)) {
+        No *c = dequeue(&f);
+
+        printf("Cliente %d - Espera: %d min\n", c->id, espera);
+
+        espera += c->tempo;
+        free(c);
+    }
+
+    return 0;
+}
