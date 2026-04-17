@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct No {
+    int id;
+    int pag;
+    int prio;
+    struct No *prox;
+} No;
+
+typedef struct {
+    No *ini;
+    No *fim;
+} Fila;
+
+void init(Fila *f) {
+    f->ini = NULL;
+    f->fim = NULL;
+}
+
+int vazia(Fila *f) {
+    return f->ini == NULL;
+}
+
+void enqueue(Fila *f, int id, int pag, int prio) {
+    No *n = (No*) malloc(sizeof(No));
+    n->id = id;
+    n->pag = pag;
+    n->prio = prio;
+    n->prox = NULL;
+
+    // insere no início (maior prioridade)
+    if(vazia(f) || prio < f->ini->prio) {
+        n->prox = f->ini;
+        f->ini = n;
+        if(f->fim == NULL) f->fim = n;
+    } else {
+        No *atual = f->ini;
+
+        // mantém ordem de chegada em caso de empate
+        while(atual->prox != NULL && atual->prox->prio <= prio) {
+            atual = atual->prox;
+        }
+
+        n->prox = atual->prox;
+        atual->prox = n;
+
+        if(n->prox == NULL) {
+            f->fim = n;
+        }
+    }
+}
+
+No* dequeue(Fila *f) {
+    if(vazia(f)) return NULL;
+
+    No *t = f->ini;
+    f->ini = t->prox;
+
+    if(f->ini == NULL) {
+        f->fim = NULL;
+    }
+
+    return t;
+}
+
+int main() {
+    Fila f;
+    init(&f);
+
+    int n, i, id, pag, prio;
+
+    printf("Qtd docs: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++) {
+        printf("\nDoc %d\n", i+1);
+
+        printf("ID: ");
+        scanf("%d", &id);
+
+        printf("Paginas: ");
+        scanf("%d", &pag);
+
+        printf("Prioridade: ");
+        scanf("%d", &prio);
+
+        enqueue(&f, id, pag, prio);
+    }
+
+    printf("\nFila de impressao:\n");
+
+    while(!vazia(&f)) {
+        No *d = dequeue(&f);
+        printf("ID:%d | Pag:%d | Prio:%d\n", d->id, d->pag, d->prio);
+        free(d);
+    }
+
+    return 0;
+}
